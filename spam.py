@@ -1,12 +1,10 @@
 import streamlit as st
 import torch
 import torch.nn as nn
-import pandas as pd
+import json
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from collections import Counter
 import nltk
-import json
 
 # Load the model
 class SpamCNN(nn.Module):
@@ -35,13 +33,21 @@ output_size = 1
 dropout = 0.5
 
 # Load vocabulary and max_len
-with open('vocab.json', 'r') as f:
-    vocab = json.load(f)
+try:
+    with open('vocab.json', 'r') as f:
+        vocab = json.load(f)
+except FileNotFoundError:
+    st.error("Vocabulary file not found.")
+    st.stop()
 
 vocab_size = len(vocab) + 1
 
-with open('max_len.txt', 'r') as f:
-    max_len = int(f.read().strip())
+try:
+    with open('max_len.txt', 'r') as f:
+        max_len = int(f.read().strip())
+except FileNotFoundError:
+    st.error("Max length file not found.")
+    st.stop()
 
 model = SpamCNN(vocab_size, embed_size, num_filters, filter_sizes, output_size, dropout)
 model.load_state_dict(torch.load("spam_cnn_model.pth"))
