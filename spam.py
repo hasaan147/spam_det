@@ -85,7 +85,7 @@ def predict_message(model, message, vocab, max_len):
     return "spam" if prediction > 0.5 else "ham"
 
 # Streamlit app
-st.title("Spam Detection using CNN")
+st.title("Spam Detection using RNN")
 
 st.write("### Enter a message to check if it's spam or ham:")
 
