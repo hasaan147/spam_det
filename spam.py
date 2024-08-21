@@ -53,6 +53,7 @@ model = SpamCNN(vocab_size, embed_size, num_filters, filter_sizes, output_size, 
 model.load_state_dict(torch.load("spam_cnn_model.pth"))
 
 # NLTK data download
+nltk.download('punkt_tab')
 nltk.download('punkt')
 nltk.download('stopwords')
 
